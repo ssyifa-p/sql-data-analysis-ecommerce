@@ -10,6 +10,7 @@ SQL Techniques Applied:
 
 Case studies and queries:
 
+
 -- In terms of the supply of item, which product category that have the most variety of SKU that being input to the system in the year 2019?
 
 SELECT product_category, COUNT(DISTINCT product_sku) total_sku_variety
@@ -21,6 +22,7 @@ WHERE date(created_at) BETWEEN '2019-01-01' AND '2019-12-31'
 GROUP BY 1
 
 ORDER BY 2 DESC;
+
 
 -- Considering completed orders and focusing on the month of shipment, which month in the year 2021 had the lowest total order performance for the Jeans category?
 
