@@ -10,41 +10,28 @@ SQL Techniques Applied:
 
 Case studies and queries:
 
-
 -- In terms of the supply of item, which product category that have the most variety of SKU that being input to the system in the year 2019?
 
 SELECT product_category, COUNT(DISTINCT product_sku) total_sku_variety
-
 FROM `sql-project-376612.thelook_ecommerce.inventory_items`
-
 WHERE date(created_at) BETWEEN '2019-01-01' AND '2019-12-31'
-
 GROUP BY 1
-
 ORDER BY 2 DESC;
-
 
 -- Considering completed orders and focusing on the month of shipment, which month in the year 2021 had the lowest total order performance for the Jeans category?
 
 SELECT EXTRACT(MONTH FROM o.shipped_at) as month, COUNT(i.product_category) product_category, i.product_category
-
 FROM `sql-project-376612.thelook_ecommerce.order_items` o
-
 JOIN `sql-project-376612.thelook_ecommerce.inventory_items` i
-
 ON o.inventory_item_id = i.id
-
 WHERE EXTRACT(YEAR FROM o.shipped_at) = 2021
-
 AND product_category = 'Jeans'
-
 AND status = 'Complete'
-
 GROUP BY 1,3
-
 ORDER BY 2;
 
 -- To retrieve the location with the highest number of buyers (use unique user) who made purchases on our platform during the year 2022, which of the following SQL scripts is correct?
+
 SELECT DISTINCT t2.country, COUNT(DISTINCT t1.user_id) total_user
 FROM `sql-project-376612.thelook_ecommerce.orders` t1
 LEFT JOIN `sql-project-376612.thelook_ecommerce.users` t2
@@ -56,6 +43,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 
 -- Considering the completed orders that were shipped in the year 2022, which distribution center to which country destination had the highest total number of items sold?
+
 WITH distribution as 
 (
   SELECT a.id, a.name, b.id
@@ -95,6 +83,7 @@ GROUP BY 1,2
 ORDER BY 3 DESC
 
 -- Which product that gives highest revenue in the past 10 months?
+
 SELECT b.product_name, SUM(a.total_price) total_revenue
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
@@ -103,6 +92,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 
 -- Which product that gives lowest revenue in the past 10 months?
+
 SELECT b.product_ID, b.product_name, b.size, b.colour, SUM(a.total_price) total_revenue
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
@@ -112,6 +102,7 @@ ORDER BY 5
 LIMIT 10;
 
 -- Highest quantity sold
+
 SELECT b.product_ID, b.product_name, b.size, b.colour, SUM(a.quantity) total_quantity
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
@@ -121,6 +112,7 @@ ORDER BY 5 DESC
 LIMIT 10;
 
 -- Lowest quantity sold
+
 SELECT b.product_ID, b.product_name, b.size, b.colour, SUM(a.quantity) total_quantity
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
@@ -131,6 +123,7 @@ LIMIT 10;
 
 
 -- Which product type that gives the highest revenue in the past 10 months?
+
 SELECT b.product_type, SUM(a.total_price) total_revenue
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
@@ -140,6 +133,7 @@ ORDER BY 2 DESC;
 
 
 -- Which product type that has highest quantity sold
+
 SELECT b.product_type, SUM(a.quantity) total_quantity
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
@@ -148,6 +142,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 
 -- highest to lowest revenue product type per month
+
 SELECT EXTRACT(MONTH FROM c.order_date) as month, b.product_type, SUM(a.total_price) total_revenue
 FROM `carbon-quanta-390304.shopping_cart_database.sales` a
 JOIN `carbon-quanta-390304.shopping_cart_database.products` b ON a.product_id = b.product_ID
