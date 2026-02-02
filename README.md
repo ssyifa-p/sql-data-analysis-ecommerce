@@ -11,21 +11,35 @@ SQL Techniques Applied:
 Case studies and queries:
 
 -- In terms of the supply of item, which product category that have the most variety of SKU that being input to the system in the year 2019?
+
 SELECT product_category, COUNT(DISTINCT product_sku) total_sku_variety
+
 FROM `sql-project-376612.thelook_ecommerce.inventory_items`
+
 WHERE date(created_at) BETWEEN '2019-01-01' AND '2019-12-31'
+
 GROUP BY 1
+
 ORDER BY 2 DESC;
 
 -- Considering completed orders and focusing on the month of shipment, which month in the year 2021 had the lowest total order performance for the Jeans category?
+
 SELECT EXTRACT(MONTH FROM o.shipped_at) as month, COUNT(i.product_category) product_category, i.product_category
+
 FROM `sql-project-376612.thelook_ecommerce.order_items` o
+
 JOIN `sql-project-376612.thelook_ecommerce.inventory_items` i
+
 ON o.inventory_item_id = i.id
+
 WHERE EXTRACT(YEAR FROM o.shipped_at) = 2021
+
 AND product_category = 'Jeans'
+
 AND status = 'Complete'
+
 GROUP BY 1,3
+
 ORDER BY 2;
 
 -- To retrieve the location with the highest number of buyers (use unique user) who made purchases on our platform during the year 2022, which of the following SQL scripts is correct?
